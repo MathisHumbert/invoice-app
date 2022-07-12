@@ -61,7 +61,14 @@ export const registerUser = createAsyncThunk<
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    logoutUser: (state) => {
+      state.user = null;
+      state.token = null;
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+    },
+  },
 
   extraReducers: (builder) => {
     // LOGIN
@@ -98,3 +105,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+export const { logoutUser } = userSlice.actions;
