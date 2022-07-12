@@ -25,7 +25,7 @@
   --dark-btn-hover-bcg: #0c0e16;
   --draft-color: #373b53;
   --draft-bcg: rgba(55, 59, 83, 0.05);
-  --transition: all 0.3s ease-in-out;
+  --transition: all 0.25s ease-in-out;
   --long-transition: all 0.5s ease-in-out;
 }
 
@@ -53,7 +53,6 @@ html.dark-theme {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
 }
 
 #root {
@@ -71,6 +70,7 @@ body {
   background: var(--primary-bcg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
 }
 
 code {
@@ -144,9 +144,19 @@ aside {
   border: 1px solid var(--red-color);
 }
 
+.input.error {
+  border: 1px solid var(--red-color);
+}
+
 .input::placeholder {
   color: var(--primary-color);
   opacity: 0.5;
+}
+
+.label-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 label {
@@ -154,6 +164,16 @@ label {
   font-size: 12px;
   line-height: 15px;
   letter-spacing: -0.25px;
+}
+
+label.error {
+  color: var(--red-color);
+}
+
+.input-error {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--red-color);
 }
 
 .main-btn {
@@ -165,6 +185,7 @@ label {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: color 0.25s ease-in-out, background 0.25s ease-in-out;
 }
 
 .main-btn.purple {
