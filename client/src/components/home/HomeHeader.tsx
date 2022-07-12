@@ -1,16 +1,23 @@
+import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
-// import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-// import { useSelector, useDispatch } from 'react-redux';
-// import FilterForm from './FilterForm';
-// import NewButton from './NewButton';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
-export default function HomeHeader() {
-  // const dispatch = useDispatch();
-  // const { invoices } = useSelector((state) => state.dataReducer);
+import { InvoiceTypes } from '../../typing';
+import FilterInvoice from './FilterInvoice';
+import NewInvoiceButton from './NewInvoiceButton';
+
+interface Props {
+  invoices: InvoiceTypes[];
+  filter: string[];
+  setFilter: Dispatch<SetStateAction<string[]>>;
+}
+
+export default function HomeHeader({ invoices, filter, setFilter }: Props) {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   return (
     <Wrapper>
-      {/* <div className='left'>
+      <div className='left'>
         <h1>Invoices</h1>
         <p>
           <span className='large'>There are </span> {invoices.length} total
@@ -23,21 +30,25 @@ export default function HomeHeader() {
           <button
             type='button'
             className='filter-btn'
-            onClick={() => dispatch(toggleFilters())}
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
           >
             <p>
               Filter <span className='large'>by status</span>
             </p>
-            {isFiltersOpen ? (
+            {isFilterOpen ? (
               <FaChevronUp className='filter-icon icon' />
             ) : (
               <FaChevronDown className='filter-icon icon' />
             )}
           </button>
-          <FilterForm />
+          <FilterInvoice
+            isFilterOpen={isFilterOpen}
+            filter={filter}
+            setFilter={setFilter}
+          />
         </div>
-        <NewButton />
-      </div> */}
+        <NewInvoiceButton />
+      </div>
     </Wrapper>
   );
 }

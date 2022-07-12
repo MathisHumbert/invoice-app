@@ -1,23 +1,54 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { AppDispatch } from '../utils/store';
+import { AppDispatch, RootState } from '../utils/store';
 import { getInvoices } from '../features/invoice/invoiceSlice';
-// import { Header, AllInvoices, SidebarNew } from '../components/HomeInvoicePage';
+import HomeHeader from '../components/home/HomeHeader';
+import SingleInvoice from '../components/home/SingleInvoice';
+import NoInvoices from '../components/home/NoInvoices';
 
 export default function HomeInvoicePage() {
+  const [filter, setFilter] = useState<string[]>([]);
+  let { invoices, isLoading, isError, isFirstFetching } = useSelector(
+    (state: RootState) => state.invoice
+  );
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    if (!isFirstFetching) return;
+
+    console.log('fetch');
     dispatch(getInvoices());
   }, []);
+
+  if (isLoading || !invoices) {
+    return <div className='loading'></div>;
+  }
+
+  if (isError) {
+    return <h1>Someting went wrong please try again</h1>;
+  }
+
+  if (invoices.length === 0) {
+    return <NoInvoices />;
+  }
 
   return (
     <Wrapper>
       <div className='container'>
-        {/* <Header /> */}
-        {/* <AllInvoices /> */}
+        <HomeHeader invoices={invoices} filter={filter} setFilter={setFilter} />
+        <section>
+          {filter.length
+            ? invoices
+                .filter((invoice) => filter.includes(invoice.status))
+                .map((invoice) => (
+                  <SingleInvoice key={invoice._id} invoice={invoice} />
+                ))
+            : invoices.map((invoice) => (
+                <SingleInvoice key={invoice._id} invoice={invoice} />
+              ))}
+        </section>
         {/* <SidebarNew /> */}
       </div>
     </Wrapper>
@@ -28,8 +59,19 @@ const Wrapper = styled.main`
   width: calc(100% - 48px);
   margin: 0 auto;
 
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
   @media (min-width: 768px) {
     width: calc(100% - 96px);
+
+    section {
+      gap: 24px;
+    }
   }
 
   @media (min-width: 1440px) {

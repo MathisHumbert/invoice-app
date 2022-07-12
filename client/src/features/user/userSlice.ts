@@ -1,27 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+import { UserFormInputs, UserSuccess, UserError } from '../../typing';
+
 interface UserItem {
   user: string | null;
   token: string | null;
   isLoading: boolean;
   alertText: string;
   alertType: string;
-}
-
-interface FormInputs {
-  name?: string;
-  email: string;
-  password: string;
-}
-
-interface LoginUserSuccess {
-  user: string;
-  token: string;
-}
-
-interface LoginUserError {
-  msg: string;
 }
 
 const initialState: UserItem = {
@@ -33,23 +20,23 @@ const initialState: UserItem = {
 };
 
 export const loginUser = createAsyncThunk<
-  LoginUserSuccess,
-  FormInputs,
-  { rejectValue: LoginUserError }
->('user/loginUser', async (form: FormInputs, thunkApi) => {
+  UserSuccess,
+  UserFormInputs,
+  { rejectValue: UserError }
+>('user/loginUser', async (form: UserFormInputs, thunkApi) => {
   try {
-    const res = await axios.post('/api/v1/auth/login', form);
-    return res.data;
+    const { data } = await axios.post('/api/v1/auth/login', form);
+    return data;
   } catch (error: any) {
     return thunkApi.rejectWithValue({ msg: error.response.data.msg });
   }
 });
 
 export const registerUser = createAsyncThunk<
-  LoginUserSuccess,
-  FormInputs,
-  { rejectValue: LoginUserError }
->('user/registerUser', async (form: FormInputs, thunkApi) => {
+  UserSuccess,
+  UserFormInputs,
+  { rejectValue: UserError }
+>('user/registerUser', async (form: UserFormInputs, thunkApi) => {
   try {
     const res = await axios.post('/api/v1/auth/register', form);
     return res.data;

@@ -5,6 +5,7 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { AppDispatch, RootState } from '../utils/store';
+import { resetInvoiceState } from '../features/invoice/invoiceSlice';
 import { loginUser, registerUser } from '../features/user/userSlice';
 import { email_rules, general_rules } from '../utils/rules';
 import AppLogo from '../components/shared/AppLogo';
@@ -38,6 +39,7 @@ export default function Register() {
   }, [user, navigate]);
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
+    dispatch(resetInvoiceState());
     if (isMember) {
       dispatch(loginUser(data));
     } else {

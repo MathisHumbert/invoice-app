@@ -3,76 +3,67 @@ import axios from 'axios';
 
 import { RootState } from '../../utils/store';
 
-interface InvoiceAddress {
-  street: string;
-  city: string;
-  postCode: string;
-  country: string;
-}
-
-interface InvoiceItems {
-  id: string;
-  name: string;
-  price: string;
-  total: string;
-}
-
-interface Invoice {
-  _id: string;
-  createdAt: string;
-  paymentDue: string;
-  description: string;
-  paymentTerms: number;
-  clientName: string;
-  clientEmail: string;
-  status: string;
-  senderAddress: InvoiceAddress;
-  clientAddress: InvoiceAddress;
-  items: InvoiceItems[];
-  total: number;
-  createdBy: string;
-}
+import { InvoiceTypes, InvoiceError } from '../../typing';
 
 interface InvoiceItem {
-  invoices: Invoice[];
+  invoices: null | InvoiceTypes[];
   isLoading: boolean;
+  isError: boolean;
+  isFirstFetching: boolean;
 }
 
 const initialState: InvoiceItem = {
-  invoices: [],
+  invoices: null,
   isLoading: false,
+  isError: false,
+  isFirstFetching: true,
 };
 
 export const getInvoices = createAsyncThunk<
-  Invoice[],
+  InvoiceTypes[],
   void,
-  { state: RootState }
+  { state: RootState; rejectValue: InvoiceError }
 >('invoice/getInvoices', async (_, thunkApi) => {
   const token = thunkApi.getState().user.token;
 
-  const { data } = await axios.get('/api/v1/invoices', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return data;
+  try {
+    const { data } = await axios.get('/api/v1/invoices', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    return thunkApi.rejectWithValue({
+      msg: 'Someting went wrong please try again',
+    });
+  }
 });
 
 const invoiceSlice = createSlice({
   name: 'invoice',
   initialState,
-  reducers: {},
+  reducers: {
+    resetInvoiceState: () => initialState,
+  },
   extraReducers: (builder) => {
     // GET INVOICES
     builder.addCase(getInvoices.pending, (state) => {
       state.isLoading = true;
+      state.isError = false;
+    });
+    builder.addCase(getInvoices.rejected, (state) => {
+      state.isError = true;
+      state.isLoading = false;
+      state.invoices = [];
     });
     builder.addCase(getInvoices.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.invoices = payload;
+      state.isFirstFetching = false;
     });
   },
 });
 
 export default invoiceSlice.reducer;
+export const { resetInvoiceState } = invoiceSlice.actions;
