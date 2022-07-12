@@ -1,7 +1,18 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+
+import { AppDispatch } from '../utils/store';
+import { getInvoices } from '../features/invoice/invoiceSlice';
 // import { Header, AllInvoices, SidebarNew } from '../components/HomeInvoicePage';
 
 export default function HomeInvoicePage() {
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(getInvoices());
+  }, []);
+
   return (
     <Wrapper>
       <div className='container'>

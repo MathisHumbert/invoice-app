@@ -69,7 +69,6 @@ const userSlice = createSlice({
       localStorage.removeItem('token');
     },
   },
-
   extraReducers: (builder) => {
     // LOGIN
     builder.addCase(loginUser.pending, (state) => {
