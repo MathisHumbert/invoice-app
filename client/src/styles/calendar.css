@@ -43,6 +43,11 @@
   height: 6px;
   width: 6px;
   top: 10px !important;
+  border-color: var(--purple-hover-color) !important;
+}
+
+.react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
+  border-color: var(--purple-color) !important;
 }
 
 .react-datepicker__header {
@@ -89,10 +94,14 @@
 
 .react-datepicker__day--selected {
   background-color: transparent !important;
-  color: var(--purple-hover-color) !important;
+  color: var(--purple-color) !important;
 }
 
 .react-datepicker__day--outside-month {
   color: var(--primary-color) !important;
   opacity: 0.09 !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background: transparent !important;
 }

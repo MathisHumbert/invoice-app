@@ -3,7 +3,7 @@ import { FieldError } from 'react-hook-form';
 interface Props {
   onChange: (value: any) => void;
   value: string | undefined;
-  error: FieldError | undefined;
+  error?: FieldError | undefined;
   label: string;
   type: string;
   name: string;
