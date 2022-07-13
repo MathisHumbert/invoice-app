@@ -3,7 +3,7 @@ import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import StatusButton from '../shared/StatusButton';
-import { formatPrice } from '../../utils/helpers';
+// import { formatPrice } from '../../utils/helpers';
 import { InvoiceTypes } from '../../typing';
 
 export default function SingleInvoice({ invoice }: { invoice: InvoiceTypes }) {

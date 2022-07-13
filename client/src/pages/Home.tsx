@@ -20,6 +20,7 @@ export default function HomeInvoicePage() {
     if (!isFirstFetching) return;
 
     dispatch(getInvoices());
+    // eslint-disable-next-line
   }, []);
 
   if (isLoading || !invoices) {

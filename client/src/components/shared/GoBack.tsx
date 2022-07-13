@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { FaChevronLeft } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 // import { closeNewSidebar } from '../../redux/actions/toggleActions';
 // import { resetItem } from '../../redux/actions/formActions';
 
 export default function GoBack() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   return (
     <Wrapper

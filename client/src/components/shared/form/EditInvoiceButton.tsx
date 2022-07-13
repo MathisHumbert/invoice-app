@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 
 export default function EditInvoiceButton() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleSaveSend = () => {
     // send to API
