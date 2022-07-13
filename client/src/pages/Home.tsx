@@ -7,6 +7,7 @@ import { getInvoices } from '../features/invoice/invoiceSlice';
 import HomeHeader from '../components/home/HomeHeader';
 import SingleInvoice from '../components/home/SingleInvoice';
 import NoInvoices from '../components/home/NoInvoices';
+import NewInvoiceAside from '../components/home/NewInvoiceAside';
 
 export default function HomeInvoicePage() {
   const [filter, setFilter] = useState<string[]>([]);
@@ -18,7 +19,6 @@ export default function HomeInvoicePage() {
   useEffect(() => {
     if (!isFirstFetching) return;
 
-    console.log('fetch');
     dispatch(getInvoices());
   }, []);
 
@@ -49,7 +49,7 @@ export default function HomeInvoicePage() {
                 <SingleInvoice key={invoice._id} invoice={invoice} />
               ))}
         </section>
-        {/* <SidebarNew /> */}
+        <NewInvoiceAside />
       </div>
     </Wrapper>
   );

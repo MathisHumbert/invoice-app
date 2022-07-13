@@ -8,3 +8,11 @@ export const email_rules = {
     message: 'please enter a valid email address',
   },
 };
+
+export const number_rules = {
+  required: "can't be empty",
+  pattern: {
+    value: /^[0-9]*$/,
+    message: 'Wrong format',
+  },
+};

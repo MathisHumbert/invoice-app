@@ -14,7 +14,7 @@ export default function SingleInvoice({ invoice }: { invoice: InvoiceTypes }) {
       <Wrapper>
         <h4>
           <span>#</span>
-          {invoice._id.substring(18, 24).toUpperCase()}
+          {invoice._id!.substring(18, 24).toUpperCase()}
         </h4>
         {/* <p className='date'>{formatDate(createdAt)}</p> */}
         <p className='date'>DATE</p>

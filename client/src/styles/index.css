@@ -153,6 +153,26 @@ aside {
   opacity: 0.5;
 }
 
+.date-input {
+  position: relative;
+  width: 100%;
+}
+
+.date-container {
+  position: relative;
+}
+
+.date-container input {
+  padding: 19px 0 15px 20px;
+}
+
+.date-container img {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-25%);
+}
+
 .label-container {
   display: flex;
   align-items: center;
@@ -257,9 +277,8 @@ label.error {
   z-index: -1;
   opacity: 0;
   background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  transition: var(--long-transition);
   cursor: pointer;
+  display: none;
 }
 
 @keyframes spinner {
@@ -290,6 +309,7 @@ label.error {
   }
 
   .rest-aside.open {
+    display: flex;
     z-index: 3;
     opacity: 1;
   }

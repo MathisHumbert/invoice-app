@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { FaPlus } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-// import { openNewSidebar } from '../../redux/actions/toggleActions';
+
+import { toggleNewInvoiceAside } from '../../features/aside/asideSlice';
 
 export default function NewInvoiceButton() {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ export default function NewInvoiceButton() {
     <Wrapper
       type='button'
       className='new-btn'
-      onClick={() => console.log('open new invoice form')}
+      onClick={() => dispatch(toggleNewInvoiceAside())}
     >
       <span className='icon-container'>
         <FaPlus className='icon' />
