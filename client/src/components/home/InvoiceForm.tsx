@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import uniqid from 'uniqid';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { InvoiceTypes } from '../../typing';
 import SenderInputs from '../shared/form/SenderInputs';
@@ -8,6 +7,7 @@ import ClientInputs from '../shared/form/ClientInputs';
 import CreateInvoiceButton from '../shared/form/CreateInvoiceButton';
 import EditInvoiceButton from '../shared/form/EditInvoiceButton';
 import ItemInput from '../shared/form/ItemsInput';
+import NewItemInputs from '../shared/form/NewItemInputs';
 
 interface Props {
   isNewInvoice: boolean;
@@ -51,19 +51,18 @@ export default function InvoiceForm({ isNewInvoice, invoice }: Props) {
     // add the number in terms to paymentdue
   };
 
-  // console.log(watch());
-
   return (
     <Wrapper onSubmit={handleSubmit(onSubmit)}>
       <SenderInputs control={control} />
       <ClientInputs control={control} />
-      <Controller
+      {/* <Controller
         control={control}
         name='items'
         render={({ field: { value, onChange } }) => (
           <ItemInput value={value} onChange={onChange} />
         )}
-      />
+      /> */}
+      <NewItemInputs control={control} />
 
       {isNewInvoice ? <CreateInvoiceButton /> : <EditInvoiceButton />}
     </Wrapper>

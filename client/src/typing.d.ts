@@ -7,11 +7,11 @@ export interface InvoiceAddress {
 }
 
 export interface InvoiceItems {
-  id: string;
+  id?: string;
   name: string;
   quantity?: string;
   price: string;
-  total: string | number;
+  total?: string | number;
 }
 
 export interface InvoiceTypes {
