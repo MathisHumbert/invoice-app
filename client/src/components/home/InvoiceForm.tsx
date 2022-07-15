@@ -6,8 +6,7 @@ import SenderInputs from '../shared/form/SenderInputs';
 import ClientInputs from '../shared/form/ClientInputs';
 import CreateInvoiceButton from '../shared/form/CreateInvoiceButton';
 import EditInvoiceButton from '../shared/form/EditInvoiceButton';
-import ItemInput from '../shared/form/ItemsInput';
-import NewItemInputs from '../shared/form/NewItemInputs';
+import ItemInputs from '../shared/form/ItemInputs';
 
 interface Props {
   isNewInvoice: boolean;
@@ -15,7 +14,7 @@ interface Props {
 }
 
 export default function InvoiceForm({ isNewInvoice, invoice }: Props) {
-  const { control, handleSubmit, watch } = useForm<InvoiceTypes>({
+  const { control, handleSubmit } = useForm<InvoiceTypes>({
     defaultValues: {
       createdAt: isNewInvoice ? new Date() : invoice?.createdAt,
       paymentDue: isNewInvoice ? new Date() : invoice?.createdAt,
@@ -49,20 +48,14 @@ export default function InvoiceForm({ isNewInvoice, invoice }: Props) {
     console.log(FormData);
 
     // add the number in terms to paymentdue
+    // check if there is at least one item
   };
 
   return (
     <Wrapper onSubmit={handleSubmit(onSubmit)}>
       <SenderInputs control={control} />
       <ClientInputs control={control} />
-      {/* <Controller
-        control={control}
-        name='items'
-        render={({ field: { value, onChange } }) => (
-          <ItemInput value={value} onChange={onChange} />
-        )}
-      /> */}
-      <NewItemInputs control={control} />
+      <ItemInputs control={control} />
 
       {isNewInvoice ? <CreateInvoiceButton /> : <EditInvoiceButton />}
     </Wrapper>

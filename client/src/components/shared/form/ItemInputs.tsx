@@ -1,14 +1,12 @@
-import React from 'react';
 import styled from 'styled-components';
-import { Control, Controller, useFieldArray, useWatch } from 'react-hook-form';
+import { Control, Controller, useFieldArray } from 'react-hook-form';
 import { FaTrash } from 'react-icons/fa';
-import uniqid from 'uniqid';
 
 import { InvoiceTypes } from '../../../typing';
 import Input from '../Input';
-import { general_rules } from '../../../utils/rules';
+import { general_rules, number_rules } from '../../../utils/rules';
 
-export default function NewItemInputs({
+export default function ItemInputs({
   control,
 }: {
   control: Control<InvoiceTypes, object>;
@@ -21,15 +19,16 @@ export default function NewItemInputs({
   return (
     <Wrapper>
       {fields.map((item, id) => {
+        let total = +item.quantity! * +item.price!;
         return (
           <div
             className={id === 0 ? 'first input-container' : 'input-container'}
-            key={id}
+            key={item.id}
           >
             {/* Name */}
             <Controller
               control={control}
-              // defaultValue={item.name}
+              defaultValue={item.name}
               name={`items.${id}.name`}
               rules={general_rules}
               render={({
@@ -49,13 +48,17 @@ export default function NewItemInputs({
             {/* Quantity */}
             <Controller
               control={control}
-              // defaultValue={item.quantity}
+              defaultValue={item.quantity}
               name={`items.${id}.quantity`}
-              render={({ field: { value, onChange } }) => (
+              rules={number_rules}
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
                 <Input
                   onChange={onChange}
                   value={value}
-                  // error={error}
+                  error={error}
                   label='Qty.'
                   type='text'
                   name='quantity'
@@ -65,13 +68,17 @@ export default function NewItemInputs({
             {/* Price */}
             <Controller
               control={control}
-              // defaultValue={item.price}
+              defaultValue={item.price}
               name={`items.${id}.price`}
-              render={({ field: { value, onChange } }) => (
+              rules={number_rules}
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
                 <Input
                   onChange={onChange}
                   value={value}
-                  // error={error}
+                  error={error}
                   label='Price'
                   type='text'
                   name='price'
@@ -81,11 +88,10 @@ export default function NewItemInputs({
             {/* Total */}
             <div className='single-input total'>
               <p>Total</p>
-              {/* <p>{+item.quantity! * +item.price!}</p> */}
-              <p>{id}</p>
+              <p>{total}</p>
             </div>
             <div className='delete-item-container'>
-              <button type='button' onClick={() => remove(0)}>
+              <button type='button' onClick={() => remove(id)}>
                 <FaTrash className='icon' />
               </button>
             </div>
