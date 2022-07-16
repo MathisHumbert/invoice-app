@@ -1,18 +1,21 @@
 import styled from 'styled-components';
 import { FaChevronLeft } from 'react-icons/fa';
-// import { useDispatch } from 'react-redux';
-// import { closeNewSidebar } from '../../redux/actions/toggleActions';
-// import { resetItem } from '../../redux/actions/formActions';
+import { useDispatch } from 'react-redux';
+import {
+  toggleNewInvoiceAside,
+  toggleEditInvoiceAside,
+} from '../../../features/aside/asideSlice';
 
-export default function GoBack() {
-  // const dispatch = useDispatch();
+export default function GoBack({ isNewInvoice }: { isNewInvoice: boolean }) {
+  const dispatch = useDispatch();
 
   return (
     <Wrapper
-      onClick={() => {
-        // dispatch(closeNewSidebar());
-        // dispatch(resetItem());
-      }}
+      onClick={() =>
+        isNewInvoice
+          ? dispatch(toggleNewInvoiceAside)
+          : dispatch(toggleEditInvoiceAside)
+      }
     >
       <FaChevronLeft className='icon' />
       <h4>Go back</h4>

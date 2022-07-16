@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { RootState } from '../../utils/store';
 import { toggleNewInvoiceAside } from '../../features/aside/asideSlice';
-import GoBack from '../shared/GoBack';
+import GoBack from '../shared/form/GoBack';
 import InvoiceForm from './InvoiceForm';
 
 export default function NewInvoiceAside() {
@@ -17,7 +17,7 @@ export default function NewInvoiceAside() {
       <Wrapper $active={isNewInvoiceAsideOpen}>
         <div className='container'>
           <header>
-            <GoBack />
+            <GoBack isNewInvoice={true} />
             <h1>New Invoice</h1>
           </header>
           <InvoiceForm isNewInvoice={true} />

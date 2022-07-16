@@ -12,6 +12,16 @@ const getInvoices = async (token: string) => {
   return response.data;
 };
 
+const getInvoice = async (token: string, id: string) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(`/api/v1/invoices/${id}`, config);
+  return response.data;
+};
+
 const createInvoice = async (token: string, data: InvoiceTypes) => {
   const config = {
     headers: {
@@ -24,6 +34,7 @@ const createInvoice = async (token: string, data: InvoiceTypes) => {
 
 const invoiceService = {
   getInvoices,
+  getInvoice,
   createInvoice,
 };
 

@@ -52,13 +52,19 @@ export default function InvoiceForm({ isNewInvoice, invoice }: Props) {
   const dispatch = useDispatch<AppDispatch>();
 
   const onSaveAndSend: SubmitHandler<InvoiceTypes> = (data) => {
-    console.log(FormData);
+    if (!data.items.length) return;
 
-    // add the number in terms to paymentdue
-    // check if there is at least one item
+    setPaymentDue(data.createdAt!, data.paymentDue, data.paymentTerms!);
+    // set total
+    // set status
+    console.log(data);
 
     if (isNewInvoice) {
+      //create
+      //close new
     } else {
+      //update
+      //close old
     }
   };
 
@@ -66,8 +72,8 @@ export default function InvoiceForm({ isNewInvoice, invoice }: Props) {
     const data = getValues();
     setPaymentDue(data.createdAt!, data.paymentDue, data.paymentTerms!);
 
-    dispatch(toggleNewInvoiceAside());
     dispatch(createInvoice(data));
+    dispatch(toggleNewInvoiceAside());
   };
 
   const onDiscard = () => {
