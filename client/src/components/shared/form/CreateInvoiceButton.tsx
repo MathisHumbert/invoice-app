@@ -1,43 +1,23 @@
 import styled from 'styled-components';
-// import { useDispatch, useSelector } from 'react-redux';
 
-export default function CreateInvoiceButton() {
-  // const dispatch = useDispatch();
-
-  const handleSaveSend = () => {
-    // send to API
-  };
-
-  const handleSaveDraft = () => {
-    // pass rules and send
-  };
-
-  const handleDiscard = () => {
-    // close and reset
-  };
-
+interface Props {
+  onDiscard: () => void;
+  onSaveAsDraft: () => void;
+}
+export default function CreateInvoiceButton({
+  onDiscard,
+  onSaveAsDraft,
+}: Props) {
   return (
     <Wrapper>
-      <button
-        className='main-btn primary'
-        type='button'
-        onClick={handleDiscard}
-      >
+      <button className='main-btn primary' type='button' onClick={onDiscard}>
         Discard
       </button>
       <div className='btn-container'>
-        <button
-          className='main-btn dark'
-          type='button'
-          onClick={handleSaveDraft}
-        >
+        <button className='main-btn dark' type='button' onClick={onSaveAsDraft}>
           Save as Draft
         </button>
-        <button
-          className='main-btn purple'
-          type='submit'
-          onClick={handleSaveSend}
-        >
+        <button className='main-btn purple' type='submit'>
           Save & Send
         </button>
       </div>

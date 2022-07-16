@@ -8,14 +8,14 @@ export interface InvoiceAddress {
 
 export interface InvoiceItems {
   id?: string;
-  name: string;
+  name?: string;
   quantity?: string;
-  price: string;
+  price?: string;
   total?: string | number;
 }
 
 export interface InvoiceTypes {
-  _id?: string;
+  _id: string;
   createdAt: Date;
   paymentDue: Date;
   description: string;
@@ -27,12 +27,13 @@ export interface InvoiceTypes {
   clientAddress: InvoiceAddress;
   items: InvoiceItems[];
   total: number;
-  createdBy?: string;
+  createdBy: string;
 }
 
 export interface InvoiceError {
   msg: string;
 }
+
 // USER
 export interface UserFormInputs {
   name?: string;

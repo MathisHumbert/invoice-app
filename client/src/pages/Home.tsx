@@ -31,24 +31,24 @@ export default function HomeInvoicePage() {
     return <h1>Someting went wrong please try again</h1>;
   }
 
-  if (invoices.length === 0) {
-    return <NoInvoices />;
-  }
-
   return (
     <Wrapper>
       <div className='container'>
         <HomeHeader invoices={invoices} filter={filter} setFilter={setFilter} />
         <section>
-          {filter.length
-            ? invoices
-                .filter((invoice) => filter.includes(invoice.status))
-                .map((invoice) => (
-                  <SingleInvoice key={invoice._id} invoice={invoice} />
-                ))
-            : invoices.map((invoice) => (
+          {invoices.length === 0 ? (
+            <NoInvoices />
+          ) : filter.length ? (
+            invoices
+              .filter((invoice) => filter.includes(invoice.status))
+              .map((invoice) => (
                 <SingleInvoice key={invoice._id} invoice={invoice} />
-              ))}
+              ))
+          ) : (
+            invoices.map((invoice) => (
+              <SingleInvoice key={invoice._id} invoice={invoice} />
+            ))
+          )}
         </section>
         <NewInvoiceAside />
       </div>
@@ -65,6 +65,7 @@ const Wrapper = styled.main`
     flex-direction: column;
     gap: 1rem;
     margin-bottom: 2rem;
+    min-height: 50vh;
   }
 
   @media (min-width: 768px) {

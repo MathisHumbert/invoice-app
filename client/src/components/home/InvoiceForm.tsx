@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
+import { toggleNewInvoiceAside } from '../../features/aside/asideSlice';
+import { createInvoice } from '../../features/invoice/invoiceSlice';
+import { AppDispatch } from '../../utils/store';
+import { setPaymentDue } from '../../utils/helpers';
 import { InvoiceTypes } from '../../typing';
+
 import SenderInputs from '../shared/form/SenderInputs';
 import ClientInputs from '../shared/form/ClientInputs';
 import CreateInvoiceButton from '../shared/form/CreateInvoiceButton';
@@ -14,10 +20,10 @@ interface Props {
 }
 
 export default function InvoiceForm({ isNewInvoice, invoice }: Props) {
-  const { control, handleSubmit } = useForm<InvoiceTypes>({
+  const { control, handleSubmit, reset, getValues } = useForm<InvoiceTypes>({
     defaultValues: {
       createdAt: isNewInvoice ? new Date() : invoice?.createdAt,
-      paymentDue: isNewInvoice ? new Date() : invoice?.createdAt,
+      paymentDue: isNewInvoice ? new Date() : invoice?.paymentDue,
       description: isNewInvoice ? '' : invoice?.description,
       paymentTerms: isNewInvoice ? 30 : invoice?.paymentTerms,
       clientName: isNewInvoice ? '' : invoice?.clientName,
@@ -43,21 +49,68 @@ export default function InvoiceForm({ isNewInvoice, invoice }: Props) {
       total: isNewInvoice ? 0 : invoice?.total,
     },
   });
+  const dispatch = useDispatch<AppDispatch>();
 
-  const onSubmit: SubmitHandler<InvoiceTypes> = (data) => {
+  const onSaveAndSend: SubmitHandler<InvoiceTypes> = (data) => {
     console.log(FormData);
 
     // add the number in terms to paymentdue
     // check if there is at least one item
+
+    if (isNewInvoice) {
+    } else {
+    }
+  };
+
+  const onSaveAsDraft = () => {
+    const data = getValues();
+    setPaymentDue(data.createdAt!, data.paymentDue, data.paymentTerms!);
+
+    dispatch(toggleNewInvoiceAside());
+    dispatch(createInvoice(data));
+  };
+
+  const onDiscard = () => {
+    reset({
+      createdAt: new Date(),
+      paymentDue: new Date(),
+      description: '',
+      paymentTerms: 30,
+      clientName: '',
+      clientEmail: '',
+      status: 'draft',
+      senderAddress: {
+        street: '',
+        city: '',
+        postCode: '',
+        country: '',
+      },
+      clientAddress: {
+        street: '',
+        city: '',
+        postCode: '',
+        country: '',
+      },
+      items: [],
+      total: 0,
+    });
+    dispatch(toggleNewInvoiceAside());
   };
 
   return (
-    <Wrapper onSubmit={handleSubmit(onSubmit)}>
+    <Wrapper onSubmit={handleSubmit(onSaveAndSend)}>
       <SenderInputs control={control} />
       <ClientInputs control={control} />
       <ItemInputs control={control} />
 
-      {isNewInvoice ? <CreateInvoiceButton /> : <EditInvoiceButton />}
+      {isNewInvoice ? (
+        <CreateInvoiceButton
+          onDiscard={onDiscard}
+          onSaveAsDraft={onSaveAsDraft}
+        />
+      ) : (
+        <EditInvoiceButton />
+      )}
     </Wrapper>
   );
 }

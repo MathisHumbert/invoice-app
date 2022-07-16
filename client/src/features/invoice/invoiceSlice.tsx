@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
+import invoiceService from './invoiceService';
 import { RootState } from '../../utils/store';
-
 import { InvoiceTypes, InvoiceError } from '../../typing';
 
 interface InvoiceItem {
@@ -24,15 +23,24 @@ export const getInvoices = createAsyncThunk<
   void,
   { state: RootState; rejectValue: InvoiceError }
 >('invoice/getInvoices', async (_, thunkApi) => {
-  const token = thunkApi.getState().user.token;
-
   try {
-    const { data } = await axios.get('/api/v1/invoices', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const token = thunkApi.getState().user.token;
+    return await invoiceService.getInvoices(token!);
+  } catch (error) {
+    return thunkApi.rejectWithValue({
+      msg: 'Someting went wrong please try again',
     });
-    return data;
+  }
+});
+
+export const createInvoice = createAsyncThunk<
+  InvoiceTypes,
+  InvoiceTypes,
+  { state: RootState; rejectValue: InvoiceError }
+>('invoice/createInvoice', async (invoiceFormData: InvoiceTypes, thunkApi) => {
+  try {
+    const token = thunkApi.getState().user.token;
+    return await invoiceService.createInvoice(token!, invoiceFormData);
   } catch (error) {
     return thunkApi.rejectWithValue({
       msg: 'Someting went wrong please try again',
@@ -61,6 +69,10 @@ const invoiceSlice = createSlice({
       state.isLoading = false;
       state.invoices = payload;
       state.isFirstFetching = false;
+    });
+    // CREATE INVOICE
+    builder.addCase(createInvoice.fulfilled, (state, { payload }) => {
+      state.invoices = [...state.invoices!, payload];
     });
   },
 });

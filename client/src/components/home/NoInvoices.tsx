@@ -9,7 +9,7 @@ export default function NoInvoices() {
         Create an invoice by clicking the <br />{' '}
         <strong>
           New <span className='large'>Invoice</span>
-        </strong>
+        </strong>{' '}
         button and get started
       </p>
     </Wrapper>

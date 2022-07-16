@@ -15,14 +15,18 @@ interface Props {
 export default function HomeHeader({ invoices, filter, setFilter }: Props) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
+  let filterInvoices = filter.length
+    ? invoices.filter((invoice) => filter.includes(invoice.status))
+    : invoices;
+
   return (
     <Wrapper>
       <div className='left'>
         <h1>Invoices</h1>
         <p>
-          <span className='large'>There are </span> {invoices.length} total
-          invoice
-          {invoices.length > 1 && 's'}
+          <span className='large'>There are </span> {filterInvoices.length}{' '}
+          total invoice
+          {filterInvoices.length > 1 && 's'}
         </p>
       </div>
       <div className='right'>

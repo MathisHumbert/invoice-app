@@ -3,26 +3,22 @@ import { FaChevronRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import StatusButton from '../shared/StatusButton';
-// import { formatPrice } from '../../utils/helpers';
 import { InvoiceTypes } from '../../typing';
+import { formatDate, formatPrice } from '../../utils/helpers';
 
 export default function SingleInvoice({ invoice }: { invoice: InvoiceTypes }) {
-  // const { total } = invoice.items[0];
-
   return (
     <Link to={`/invoice/${invoice._id}`} style={{ textDecoration: 'none' }}>
       <Wrapper>
         <h4>
           <span>#</span>
-          {invoice._id!.substring(18, 24).toUpperCase()}
+          {invoice._id.substring(18, 24).toUpperCase()}
         </h4>
-        {/* <p className='date'>{formatDate(createdAt)}</p> */}
-        <p className='date'>DATE</p>
+        <p className='date'>{formatDate(invoice.createdAt)}</p>
         <p className='name'>
           {invoice.clientName === '' ? 'unknown' : invoice.clientName}
         </p>
-        {/* <h3>{formatPrice(+total)}</h3> */}
-        <h3>PRIX</h3>
+        <h3>{invoice.total ? formatPrice(invoice.total) : 'unknown'}</h3>
         <StatusButton status={invoice.status} />
         <span className='right-icon'>
           <FaChevronRight />

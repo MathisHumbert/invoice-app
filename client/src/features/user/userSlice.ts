@@ -38,8 +38,8 @@ export const registerUser = createAsyncThunk<
   { rejectValue: UserError }
 >('user/registerUser', async (form: UserFormInputs, thunkApi) => {
   try {
-    const res = await axios.post('/api/v1/auth/register', form);
-    return res.data;
+    const { data } = await axios.post('/api/v1/auth/register', form);
+    return data;
   } catch (error: any) {
     return thunkApi.rejectWithValue({ msg: error.response.data.msg });
   }
