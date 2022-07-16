@@ -62,7 +62,6 @@ const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(loginUser.rejected, (state, { payload }) => {
-      console.log('rejected', payload?.msg);
       state.isLoading = false;
     });
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {
@@ -77,7 +76,6 @@ const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(registerUser.rejected, (state, { payload }) => {
-      console.log('rejected', payload?.msg);
       state.isLoading = false;
     });
     builder.addCase(registerUser.fulfilled, (state, { payload }) => {

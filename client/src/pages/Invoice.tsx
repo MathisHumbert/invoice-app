@@ -37,10 +37,10 @@ export default function Invoice() {
       <Wrapper>
         <div className='container'>
           <GoHome />
-          <InvoiceHeader status={invoice.status} />
+          <InvoiceHeader status={invoice.status} id={invoice._id} />
           <InvoiceInfosContainer invoice={invoice} />
           <footer>
-            <InvoiceButtonsContainer status={invoice.status} />
+            <InvoiceButtonsContainer status={invoice.status} id={invoice._id} />
           </footer>
           <EditInvoiceAside invoice={invoice} />
         </div>

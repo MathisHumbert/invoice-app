@@ -11,14 +11,12 @@ import NewInvoiceAside from '../components/home/NewInvoiceAside';
 
 export default function HomeInvoicePage() {
   const [filter, setFilter] = useState<string[]>([]);
-  let { invoices, isLoading, isError, isFirstFetching } = useSelector(
+  let { invoices, isLoading, isError } = useSelector(
     (state: RootState) => state.invoice
   );
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    if (!isFirstFetching) return;
-
     dispatch(getInvoices());
     // eslint-disable-next-line
   }, []);

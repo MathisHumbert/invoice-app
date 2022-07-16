@@ -3,7 +3,13 @@ import styled from 'styled-components';
 import StatusButton from '../shared/StatusButton';
 import InvoiceButtonsContainer from './InvoiceButtonsContainer';
 
-export default function InvoiceHeader({ status }: { status: string }) {
+export default function InvoiceHeader({
+  status,
+  id,
+}: {
+  status: string;
+  id: string;
+}) {
   return (
     <Wrapper>
       <div className='left'>
@@ -11,7 +17,7 @@ export default function InvoiceHeader({ status }: { status: string }) {
         <StatusButton status={status} />
       </div>
       <div className='right'>
-        <InvoiceButtonsContainer status={status} />
+        <InvoiceButtonsContainer status={status} id={id} />
       </div>
     </Wrapper>
   );

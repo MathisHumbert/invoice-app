@@ -1,17 +1,22 @@
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-
+import { useNavigate } from 'react-router-dom';
+import { toggleEditInvoiceAside } from '../../features/aside/asideSlice';
+import { AppDispatch } from '../../utils/store';
 import {
-  toggleDeleteInvoiceAside,
-  toggleEditInvoiceAside,
-} from '../../features/aside/asideSlice';
+  deleteInvoice,
+  updateInvoice,
+} from '../../features/invoice/invoiceSlice';
 
 export default function InvoiceButtonsContainer({
   status,
+  id,
 }: {
   status: string;
+  id: string;
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  let navigate = useNavigate();
 
   return (
     <Wrapper>
@@ -27,16 +32,19 @@ export default function InvoiceButtonsContainer({
       )}
       <button
         className='main-btn red'
-        onClick={() => dispatch(toggleDeleteInvoiceAside())}
+        onClick={() => {
+          navigate('/');
+          dispatch(deleteInvoice(id));
+        }}
       >
         Delete
       </button>
       {status === 'pending' && (
         <button
           className='main-btn purple'
-          // onClick={() =>
-          //   dispatch(updateInvoice(single_invoice._id, { status: 'paid' }))
-          // }
+          onClick={() =>
+            dispatch(updateInvoice({ invoiceFormData: { status: 'paid' }, id }))
+          }
         >
           Mark as Paid
         </button>

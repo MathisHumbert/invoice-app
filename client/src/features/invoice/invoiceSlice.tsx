@@ -9,7 +9,6 @@ interface InvoiceItem {
   invoice: null | InvoiceTypes;
   isLoading: boolean;
   isError: boolean;
-  isFirstFetching: boolean;
 }
 
 const initialState: InvoiceItem = {
@@ -17,7 +16,6 @@ const initialState: InvoiceItem = {
   invoice: null,
   isLoading: false,
   isError: false,
-  isFirstFetching: true,
 };
 
 export const getInvoices = createAsyncThunk<
@@ -65,6 +63,36 @@ export const createInvoice = createAsyncThunk<
   }
 });
 
+export const updateInvoice = createAsyncThunk<
+  InvoiceTypes,
+  { invoiceFormData: InvoiceTypes | { status: string }; id: string },
+  { state: RootState; rejectValue: InvoiceError }
+>('invoice/updateInvoice', async ({ invoiceFormData, id }, thunkApi) => {
+  try {
+    const token = thunkApi.getState().user.token;
+    return await invoiceService.updateInvoice(token!, id, invoiceFormData);
+  } catch (error) {
+    return thunkApi.rejectWithValue({
+      msg: 'Someting went wrong please try again',
+    });
+  }
+});
+
+export const deleteInvoice = createAsyncThunk<
+  string,
+  string,
+  { state: RootState; rejectValue: InvoiceError }
+>('invoice/deleteInvoice', async (id, thunkApi) => {
+  try {
+    const token = thunkApi.getState().user.token;
+    return await invoiceService.deleteInvoice(token!, id);
+  } catch (error) {
+    return thunkApi.rejectWithValue({
+      msg: 'Someting went wrong please try again',
+    });
+  }
+});
+
 const invoiceSlice = createSlice({
   name: 'invoice',
   initialState,
@@ -85,7 +113,6 @@ const invoiceSlice = createSlice({
     builder.addCase(getInvoices.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.invoices = payload;
-      state.isFirstFetching = false;
     });
     // GET INVOICE
     builder.addCase(getInvoice.pending, (state) => {
@@ -104,6 +131,14 @@ const invoiceSlice = createSlice({
     // CREATE INVOICE
     builder.addCase(createInvoice.fulfilled, (state, { payload }) => {
       state.invoices = [...state.invoices!, payload];
+    });
+    // UPDATE INVOICE
+    builder.addCase(updateInvoice.fulfilled, (state, { payload }) => {
+      state.invoice = payload;
+    });
+    // DELETE INVOICE
+    builder.addCase(deleteInvoice.fulfilled, (state, { payload }) => {
+      state.invoice = null;
     });
   },
 });

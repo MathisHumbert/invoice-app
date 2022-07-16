@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { Control, Controller, useFieldArray } from 'react-hook-form';
 import { FaTrash } from 'react-icons/fa';
@@ -6,15 +7,26 @@ import { InvoiceTypes } from '../../../typing';
 import Input from '../Input';
 import { general_rules, number_rules } from '../../../utils/rules';
 
+interface Props {
+  control: Control<InvoiceTypes, object>;
+  isItemsError: boolean;
+  setIsItemsError: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 export default function ItemInputs({
   control,
-}: {
-  control: Control<InvoiceTypes, object>;
-}) {
+  isItemsError,
+  setIsItemsError,
+}: Props) {
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'items',
   });
+
+  useEffect(() => {
+    if (fields.length > 0) setIsItemsError(false);
+    // eslint-disable-next-line
+  }, [fields]);
 
   return (
     <Wrapper>
@@ -112,6 +124,13 @@ export default function ItemInputs({
       >
         + Add New Item
       </button>
+      <span
+        className={
+          isItemsError ? 'no-item input-error show' : 'no-item input-error'
+        }
+      >
+        - At least one item must be added
+      </span>
     </Wrapper>
   );
 }
@@ -209,5 +228,14 @@ const Wrapper = styled.div`
     margin-top: 48px;
     padding: 0;
     width: 100%;
+  }
+
+  .no-item {
+    padding-top: 2rem;
+    display: none;
+
+    &.show {
+      display: block;
+    }
   }
 `;
