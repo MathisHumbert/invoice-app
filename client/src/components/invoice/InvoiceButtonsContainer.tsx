@@ -1,28 +1,33 @@
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+
+import {
+  toggleDeleteInvoiceAside,
+  toggleEditInvoiceAside,
+} from '../../features/aside/asideSlice';
 
 export default function InvoiceButtonsContainer({
   status,
 }: {
   status: string;
 }) {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   return (
     <Wrapper>
       {status !== 'paid' && (
         <button
           className='main-btn primary'
-          // onClick={() => {
-          //   dispatch(openEditSidebar());
-          //   dispatch(setItem(single_invoice));
-          // }}
+          onClick={() => {
+            dispatch(toggleEditInvoiceAside());
+          }}
         >
           Edit
         </button>
       )}
       <button
         className='main-btn red'
-        // onClick={() => dispatch(toggleDeletion())}
+        onClick={() => dispatch(toggleDeleteInvoiceAside())}
       >
         Delete
       </button>

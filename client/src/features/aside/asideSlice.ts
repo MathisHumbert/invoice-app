@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 interface AsideItem {
   isNewInvoiceAsideOpen: boolean;
   isEditInvoiceAsideOpen: boolean;
+  isDeleteInvoiceAsideOpen: boolean;
 }
 
 const initialState: AsideItem = {
   isNewInvoiceAsideOpen: false,
   isEditInvoiceAsideOpen: false,
+  isDeleteInvoiceAsideOpen: false,
 };
 
 const asideSlice = createSlice({
@@ -20,9 +22,15 @@ const asideSlice = createSlice({
     toggleEditInvoiceAside: (state) => {
       state.isEditInvoiceAsideOpen = !state.isEditInvoiceAsideOpen;
     },
+    toggleDeleteInvoiceAside: (state) => {
+      state.isDeleteInvoiceAsideOpen = !state.isDeleteInvoiceAsideOpen;
+    },
   },
 });
 
 export default asideSlice.reducer;
-export const { toggleEditInvoiceAside, toggleNewInvoiceAside } =
-  asideSlice.actions;
+export const {
+  toggleEditInvoiceAside,
+  toggleNewInvoiceAside,
+  toggleDeleteInvoiceAside,
+} = asideSlice.actions;

@@ -2,30 +2,39 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { RootState } from '../../utils/store';
-import { toggleNewInvoiceAside } from '../../features/aside/asideSlice';
+import { toggleEditInvoiceAside } from '../../features/aside/asideSlice';
 import GoBack from '../shared/form/GoBack';
 import InvoiceForm from '../shared/form/InvoiceForm';
 
-export default function NewInvoiceAside() {
-  const { isNewInvoiceAsideOpen } = useSelector(
+import { InvoiceTypes } from '../../typing';
+
+export default function EditInvoiceAside({
+  invoice,
+}: {
+  invoice: InvoiceTypes;
+}) {
+  const { isEditInvoiceAsideOpen } = useSelector(
     (state: RootState) => state.aside
   );
   const dispatch = useDispatch();
 
   return (
     <>
-      <Wrapper $active={isNewInvoiceAsideOpen}>
+      <Wrapper $active={isEditInvoiceAsideOpen}>
         <div className='container'>
           <header>
-            <GoBack isNewInvoice={true} />
-            <h1>New Invoice</h1>
+            <GoBack isNewInvoice={false} />
+            <h1>
+              Edit <span>#</span>
+              {invoice._id.substring(18, 24).toUpperCase()}
+            </h1>
           </header>
-          <InvoiceForm isNewInvoice={true} />
+          <InvoiceForm isNewInvoice={false} invoice={invoice} />
         </div>
       </Wrapper>
       <div
-        className={isNewInvoiceAsideOpen ? 'open rest-aside' : 'rest-aside'}
-        onClick={() => dispatch(toggleNewInvoiceAside())}
+        className={isEditInvoiceAsideOpen ? 'open rest-aside' : 'rest-aside'}
+        onClick={() => dispatch(toggleEditInvoiceAside())}
       ></div>
     </>
   );
@@ -68,6 +77,10 @@ const Wrapper = styled.aside<{ $active: boolean }>`
       letter-spacing: -0.5;
       line-height: 32px;
       font-size: 24px;
+    }
+
+    span {
+      color: var(--special-color);
     }
   }
 

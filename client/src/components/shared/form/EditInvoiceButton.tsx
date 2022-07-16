@@ -1,31 +1,16 @@
 import styled from 'styled-components';
-// import { useDispatch, useSelector } from 'react-redux';
 
-export default function EditInvoiceButton() {
-  // const dispatch = useDispatch();
-
-  const handleSaveSend = () => {
-    // send to API
-  };
-
-  const handleDiscard = () => {
-    // reset and close
-  };
-
+export default function EditInvoiceButton({
+  onCancel,
+}: {
+  onCancel: () => void;
+}) {
   return (
     <Wrapper>
-      <button
-        type='button'
-        className='main-btn primary'
-        onClick={handleDiscard}
-      >
+      <button type='button' className='main-btn primary' onClick={onCancel}>
         Cancel
       </button>
-      <button
-        className='main-btn purple'
-        type='button'
-        onClick={handleSaveSend}
-      >
+      <button className='main-btn purple' type='submit'>
         Save & Send
       </button>
     </Wrapper>

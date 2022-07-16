@@ -8,6 +8,9 @@ import { AppDispatch, RootState } from '../utils/store';
 import GoHome from '../components/invoice/GoHome';
 import InvoiceHeader from '../components/invoice/InvoiceHeader';
 import InvoiceInfosContainer from '../components/invoice/InvoiceInfosContainer';
+import InvoiceButtonsContainer from '../components/invoice/InvoiceButtonsContainer';
+import DeleteInvoiceAside from '../components/invoice/DeleteInvoiceAside';
+import EditInvoiceAside from '../components/invoice/EditInvoiceAside';
 
 export default function Invoice() {
   const { invoice, isLoading, isError } = useSelector(
@@ -29,22 +32,21 @@ export default function Invoice() {
     return <h1>Error</h1>;
   }
 
-  console.log(invoice);
-
   return (
-    <Wrapper>
-      <div className='container'>
-        <GoHome />
-        <InvoiceHeader status={invoice.status} />
-        <InvoiceInfosContainer invoice={invoice} />
-        {/* <GoHome />
-        <Header status={single_invoice.status} />
-        <Invoice />
-        <Footer />
-        <DeleteAside />
-        <SidebarEdit id={id} /> */}
-      </div>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <div className='container'>
+          <GoHome />
+          <InvoiceHeader status={invoice.status} />
+          <InvoiceInfosContainer invoice={invoice} />
+          <footer>
+            <InvoiceButtonsContainer status={invoice.status} />
+          </footer>
+          <EditInvoiceAside invoice={invoice} />
+        </div>
+      </Wrapper>
+      <DeleteInvoiceAside id={id!} />
+    </>
   );
 }
 
@@ -56,11 +58,26 @@ const Wrapper = styled.main`
   padding-bottom: 150px;
   position: relative;
 
+  footer {
+    position: absolute;
+    bottom: 0;
+    left: -24px;
+    width: calc(100% + 48px);
+    margin: 0 auto;
+
+    background: var(--main-bcg);
+    padding: 24px;
+  }
+
   @media (min-width: 768px) {
     width: calc(100% - 96px);
     padding-top: 48px;
     min-height: inherit;
     height: 100%;
+
+    footer {
+      display: none;
+    }
   }
 
   @media (min-width: 1440px) {
