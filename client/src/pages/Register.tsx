@@ -5,11 +5,11 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { AppDispatch, RootState } from '../utils/store';
-import { resetInvoiceState } from '../features/invoice/invoiceSlice';
 import { loginUser, registerUser } from '../features/user/userSlice';
 import { email_rules, general_rules } from '../utils/rules';
 import AppLogo from '../components/shared/AppLogo';
 import Input from '../components/shared/Input';
+import Alert from '../components/shared/Alert';
 
 interface FormInputs {
   name?: string;
@@ -19,7 +19,10 @@ interface FormInputs {
 
 export default function Register() {
   const [isMember, setIsMember] = useState(true);
-  const { user, isLoading } = useSelector((state: RootState) => state.user);
+  const [showAlert, setShowAlert] = useState(false);
+  const { user, isLoading, alertText, alertType } = useSelector(
+    (state: RootState) => state.user
+  );
   const { control, handleSubmit } = useForm<FormInputs>({
     defaultValues: {
       name: '',
@@ -38,8 +41,14 @@ export default function Register() {
     }
   }, [user, navigate]);
 
+  useEffect(() => {
+    if (!alertText && !alertType) return;
+
+    setShowAlert(true);
+    setTimeout(() => setShowAlert(false), 2000);
+  }, [alertText, alertType]);
+
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    dispatch(resetInvoiceState());
     if (isMember) {
       dispatch(loginUser(data));
     } else {
@@ -59,6 +68,7 @@ export default function Register() {
           <h1>Invoice App</h1>
         </header>
         <h1 className='title'>{isMember ? 'Login' : 'Register'}</h1>
+        {showAlert && <Alert alertText={alertText} alertType={alertType} />}
         {!isMember && (
           <Controller
             control={control}

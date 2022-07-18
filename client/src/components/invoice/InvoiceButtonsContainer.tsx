@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { toggleEditInvoiceAside } from '../../features/aside/asideSlice';
-import { AppDispatch } from '../../utils/store';
 import {
-  deleteInvoice,
-  updateInvoice,
-} from '../../features/invoice/invoiceSlice';
+  toggleEditInvoiceAside,
+  toggleDeleteInvoiceAside,
+} from '../../features/aside/asideSlice';
+import { AppDispatch } from '../../utils/store';
+import { updateInvoice } from '../../features/invoice/invoiceSlice';
 
 export default function InvoiceButtonsContainer({
   status,
@@ -16,7 +15,6 @@ export default function InvoiceButtonsContainer({
   id: string;
 }) {
   const dispatch = useDispatch<AppDispatch>();
-  let navigate = useNavigate();
 
   return (
     <Wrapper>
@@ -32,10 +30,7 @@ export default function InvoiceButtonsContainer({
       )}
       <button
         className='main-btn red'
-        onClick={() => {
-          navigate('/');
-          dispatch(deleteInvoice(id));
-        }}
+        onClick={() => dispatch(toggleDeleteInvoiceAside())}
       >
         Delete
       </button>

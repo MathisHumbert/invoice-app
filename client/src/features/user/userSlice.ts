@@ -63,11 +63,15 @@ const userSlice = createSlice({
     });
     builder.addCase(loginUser.rejected, (state, { payload }) => {
       state.isLoading = false;
+      state.alertText = payload?.msg!;
+      state.alertType = 'danger';
     });
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.token = payload.token;
       state.user = payload.user;
+      state.alertText = 'user found, redirecting...';
+      state.alertType = 'success';
       localStorage.setItem('token', payload.token);
       localStorage.setItem('user', payload.user);
     });
@@ -76,12 +80,17 @@ const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(registerUser.rejected, (state, { payload }) => {
+      console.log('rejected', payload?.msg);
+      state.alertText = payload?.msg!;
+      state.alertType = 'danger';
       state.isLoading = false;
     });
     builder.addCase(registerUser.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.token = payload.token;
       state.user = payload.user;
+      state.alertText = 'user created, redirecting...';
+      state.alertType = 'success';
       localStorage.setItem('token', payload.token);
       localStorage.setItem('user', payload.user);
     });

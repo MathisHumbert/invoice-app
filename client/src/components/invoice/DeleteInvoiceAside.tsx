@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { deleteInvoice } from '../../features/invoice/invoiceSlice';
 import { toggleDeleteInvoiceAside } from '../../features/aside/asideSlice';
 import { AppDispatch, RootState } from '../../utils/store';
 
@@ -9,6 +10,8 @@ export default function DeleteInvoiceAside({ id }: { id: string }) {
   const { isDeleteInvoiceAsideOpen } = useSelector(
     (state: RootState) => state.aside
   );
+  const navigate = useNavigate();
+
   const dispatch = useDispatch<AppDispatch>();
 
   return (
@@ -26,17 +29,16 @@ export default function DeleteInvoiceAside({ id }: { id: string }) {
           >
             Cancel
           </button>
-          <Link to='/'>
-            <button
-              className='main-btn red'
-              onClick={() => {
-                // dispatch(deleteInvoice(single_invoice._id));
-                dispatch(toggleDeleteInvoiceAside());
-              }}
-            >
-              Delete
-            </button>
-          </Link>
+          <button
+            className='main-btn red'
+            onClick={() => {
+              dispatch(deleteInvoice(id));
+              dispatch(toggleDeleteInvoiceAside());
+              navigate('/');
+            }}
+          >
+            Delete
+          </button>
         </div>
       </div>
     </Wrapper>

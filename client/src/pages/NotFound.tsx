@@ -1,17 +1,12 @@
 import styled from 'styled-components';
+import GoHome from '../components/shared/GoHome';
 
-export default function NoInvoices() {
+export default function NotFound() {
   return (
     <Wrapper>
       <img src='/assets/illustration-empty.svg' alt='no-input-img' />
       <h1>There is nothing here</h1>
-      <p>
-        Create an invoice by clicking the <br />{' '}
-        <strong>
-          New <span className='large'>Invoice</span>
-        </strong>
-        button and get started
-      </p>
+      <GoHome />
     </Wrapper>
   );
 }
@@ -27,14 +22,6 @@ const Wrapper = styled.article`
   h1 {
     margin-top: 2rem;
     margin-bottom: 1rem;
-  }
-
-  p {
-    text-align: center;
-
-    span {
-      font-weight: 700;
-    }
   }
 
   img {

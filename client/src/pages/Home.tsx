@@ -21,12 +21,12 @@ export default function HomeInvoicePage() {
     // eslint-disable-next-line
   }, []);
 
-  if (isLoading || !invoices) {
-    return <div className='loading'></div>;
-  }
-
   if (isError) {
     return <h1>Someting went wrong please try again</h1>;
+  }
+
+  if (isLoading || !invoices) {
+    return <div className='loading'></div>;
   }
 
   return (

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 import { getInvoice } from '../features/invoice/invoiceSlice';
 import { AppDispatch, RootState } from '../utils/store';
-import GoHome from '../components/invoice/GoHome';
+import GoHome from '../components/shared/GoHome';
 import InvoiceHeader from '../components/invoice/InvoiceHeader';
 import InvoiceInfosContainer from '../components/invoice/InvoiceInfosContainer';
 import InvoiceButtonsContainer from '../components/invoice/InvoiceButtonsContainer';
@@ -24,12 +24,12 @@ export default function Invoice() {
     // eslint-disable-next-line
   }, [id]);
 
-  if (isLoading || !invoice) {
-    return <div className='loading'></div>;
+  if (isError) {
+    return <Navigate to='/' />;
   }
 
-  if (isError) {
-    return <h1>Error</h1>;
+  if (isLoading || !invoice) {
+    return <div className='loading'></div>;
   }
 
   return (
@@ -45,7 +45,7 @@ export default function Invoice() {
           <EditInvoiceAside invoice={invoice} />
         </div>
       </Wrapper>
-      <DeleteInvoiceAside id={id!} />
+      <DeleteInvoiceAside id={invoice._id} />
     </>
   );
 }

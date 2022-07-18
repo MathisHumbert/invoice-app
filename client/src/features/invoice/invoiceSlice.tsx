@@ -42,6 +42,7 @@ export const getInvoice = createAsyncThunk<
     const token = thunkApi.getState().user.token;
     return await invoiceService.getInvoice(token!, id);
   } catch (error) {
+    console.log(error);
     return thunkApi.rejectWithValue({
       msg: 'Someting went wrong please try again',
     });
