@@ -52,7 +52,7 @@ const Wrapper = styled.aside<{ $active: boolean }>`
   align-items: center;
   justify-content: center;
   padding: 0 24px;
-  transition: var(--long-transition);
+  transition: all 0.5s ease-in-out;
 
   .deletion {
     background: var(--main-bcg);

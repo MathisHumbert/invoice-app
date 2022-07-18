@@ -57,13 +57,13 @@ export default function HomeInvoicePage() {
 const Wrapper = styled.main`
   width: calc(100% - 48px);
   margin: 0 auto;
+  min-height: 100vh;
 
   section {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     margin-bottom: 2rem;
-    min-height: 50vh;
   }
 
   @media (min-width: 768px) {

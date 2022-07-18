@@ -52,7 +52,7 @@ const Wrapper = styled.aside<{ $active: boolean }>`
   overflow-x: hidden;
   transform: ${(props) =>
     props.$active ? 'translateX(0)' : 'translateX(-120%)'};
-  transition: var(--long-transition);
+  transition: transform 0.5s ease-in-out;
 
   &::-webkit-scrollbar {
     width: 8px;

@@ -16,6 +16,7 @@
   box-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25);
   border-radius: 8px !important;
   padding: 25px 18px 24px;
+  background: var(--main-bcg);
 }
 
 .react-datepicker__month-container {

@@ -1,35 +1,23 @@
-// import { useEffect } from 'react';
 import styled from 'styled-components';
-// import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { toggleTheme } from '../redux/actions/toggleActions';
+import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs';
 
+import useTheme from '../../contexts/useTheme';
 import AppLogo from '../shared/AppLogo';
 import UserIcon from './UserIcon';
 
 export default function Navbar() {
-  // const dispatch = useDispatch();
-  // const { theme } = useSelector((state) => state.toggleReducer);
-
-  // useEffect(() => {
-  //   if (theme === 'light') {
-  //     document.documentElement.className = 'light-theme';
-  //   } else {
-  //     document.documentElement.className = 'dark-theme';
-  //   }
-  // }, [theme]);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <Wrapper>
       <AppLogo />
       <div className='right'>
-        <button type='button'>
-          {/* <button type='button' onClick={() => dispatch(toggleTheme())}> */}
-          {/* {theme === 'light' ? (
+        <button type='button' onClick={toggleTheme}>
+          {theme === 'light' ? (
             <BsFillMoonFill className='icon' />
           ) : (
             <BsFillSunFill className='icon' />
-          )} */}
+          )}
         </button>
         <div className='vr'></div>
         <UserIcon />
