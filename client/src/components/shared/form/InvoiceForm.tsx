@@ -92,14 +92,28 @@ export default function InvoiceForm({ isNewInvoice, invoice }: Props) {
       );
       dispatch(toggleEditInvoiceAside());
     }
+    reset(defaultValues);
   };
 
   const onSaveAsDraft = () => {
     const data = getValues();
     setPaymentDue(data.createdAt!, data.paymentDue, data.paymentTerms!);
+    let invoiceTotal = 0;
 
-    dispatch(createInvoice(data));
+    if (data.items.length) {
+      data.items = data.items.map((item) => {
+        let total = +item.price! * +item.quantity!;
+        invoiceTotal += total;
+        return {
+          ...item,
+          total,
+        };
+      });
+    }
+
+    dispatch(createInvoice({ ...data, total: invoiceTotal }));
     dispatch(toggleNewInvoiceAside());
+    reset(defaultValues);
   };
 
   const onDiscard = () => {

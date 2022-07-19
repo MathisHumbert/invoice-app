@@ -10,6 +10,7 @@ import { email_rules, general_rules } from '../utils/rules';
 import AppLogo from '../components/shared/AppLogo';
 import Input from '../components/shared/Input';
 import Alert from '../components/shared/Alert';
+import { globalUser } from '../utils/constants';
 
 interface FormInputs {
   name?: string;
@@ -137,7 +138,7 @@ export default function Register() {
           <button
             type='button'
             className='toggle-btn'
-            // onClick={handleGlobalUser}
+            onClick={() => dispatch(loginUser(globalUser))}
           >
             Access the app
           </button>{' '}

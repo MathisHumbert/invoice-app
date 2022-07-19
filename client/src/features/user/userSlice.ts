@@ -80,7 +80,6 @@ const userSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(registerUser.rejected, (state, { payload }) => {
-      console.log('rejected', payload?.msg);
       state.alertText = payload?.msg!;
       state.alertType = 'danger';
       state.isLoading = false;

@@ -16,3 +16,8 @@ export const termsData = [
     term: 30,
   },
 ];
+
+export const globalUser = {
+  email: 'user@gmail.com',
+  password: 'secret',
+};

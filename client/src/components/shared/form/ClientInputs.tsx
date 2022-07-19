@@ -2,7 +2,7 @@ import { Control, Controller } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { InvoiceTypes } from '../../../typing';
-import { general_rules, email_rules, number_rules } from '../../../utils/rules';
+import { general_rules, email_rules } from '../../../utils/rules';
 import Input from '../Input';
 import DateInput from './DateInput';
 import TermInput from './TermInput';
@@ -84,7 +84,7 @@ export default function ClientInputs({
         <Controller
           control={control}
           name='clientAddress.postCode'
-          rules={number_rules}
+          rules={general_rules}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <Input
               onChange={onChange}

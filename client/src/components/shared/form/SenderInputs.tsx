@@ -2,7 +2,7 @@ import { Control, Controller } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { InvoiceTypes } from '../../../typing';
-import { general_rules, number_rules } from '../../../utils/rules';
+import { general_rules } from '../../../utils/rules';
 import Input from '../Input';
 
 const SenderInputs = ({
@@ -50,7 +50,7 @@ const SenderInputs = ({
         <Controller
           control={control}
           name='senderAddress.postCode'
-          rules={number_rules}
+          rules={general_rules}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <Input
               onChange={onChange}
