@@ -4,7 +4,7 @@ require('express-async-errors');
 const express = require('express');
 const app = express();
 
-// const path = require('path');
+const path = require('path');
 
 const helmet = require('helmet');
 const xss = require('xss-clean');
@@ -26,16 +26,16 @@ app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
 
-// __dirname = path.resolve();
-// app.use(express.static(path.join(__dirname, './client/build')));
+__dirname = path.resolve();
+app.use(express.static(path.join(__dirname, './client/build')));
 
 // routes
 app.use('/api/v1/invoices', authenticateUser, invoicesRouter);
 app.use('/api/v1/auth', authRouter);
 
-// app.get('*', function (request, response) {
-//   response.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
-// });
+app.get('*', function (request, response) {
+  response.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
